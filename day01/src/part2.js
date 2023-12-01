@@ -110,6 +110,7 @@ cal_data.forEach((line,idx,arr) =>
         if(!isCharNumber(first))
         {
             first = 0;
+            console.log("ERR:first is zero at line: " + idx);
         }
         else
         {
@@ -119,6 +120,7 @@ cal_data.forEach((line,idx,arr) =>
         if(!isCharNumber(last))
         {
             last = 0;
+            console.log("ERR:last is zero at line: " + idx);
         }
         else
         {
@@ -128,7 +130,7 @@ cal_data.forEach((line,idx,arr) =>
         // Combine to make a number
         val = parseInt(first) * 10.0;
         val = parseInt(val) + parseInt(last);
-        console.log("vals: " + first + ";" + last + " val="+val);
+        // console.log("vals: " + first + ";" + last + " val="+val);
 
         // Sum the calibration values so far...
         accumulator = accumulator + val;
