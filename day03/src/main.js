@@ -44,18 +44,7 @@ for (let y = 0; y < file_data.length; y++)
     for(let x = 0; x < file_data[y].length; x++)
     {
         let ch = file_data[y].charAt(x);
-        if(ch === '.')
-        {
-            out_str += ' ';
-            if (add_to_sum && (0 != val))
-            {
-                part_sum += val;
-            }
-            val = 0;
-            add_to_sum = false;
-            discovered_anew = false;
-        }
-        else if (isDigit(ch)) // working out part number
+        if (isDigit(ch)) // working out part number
         {
             out_str += 'd';
             val = val * 10;
@@ -63,7 +52,23 @@ for (let y = 0; y < file_data.length; y++)
         }
         else
         {
-            out_str += ch;
+            if(ch === '.')
+            {
+                out_str += ' ';
+            }
+            else
+            {
+                out_str += ch;
+            }
+            
+            if (add_to_sum && (0 != val))
+            {
+                console.log(val);
+                part_sum += val;
+            }
+            val = 0;
+            add_to_sum = false;
+            discovered_anew = false;
         }
 
         // test if a symbol is adjacent to current part
