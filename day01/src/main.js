@@ -1,1 +1,0 @@
-console.log("Advent of code 2023 - Day 01!\r\n");
