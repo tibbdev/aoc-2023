@@ -109,8 +109,8 @@ cal_data.forEach((line,idx,arr) =>
 
         if(!isCharNumber(first))
         {
+            console.log("ERR:first is zero at line: " + idx + " was " + first);
             first = 0;
-            console.log("ERR:first is zero at line: " + idx);
         }
         else
         {
@@ -119,8 +119,8 @@ cal_data.forEach((line,idx,arr) =>
 
         if(!isCharNumber(last))
         {
+            console.log("ERR:last is zero at line: " + idx + " was " + last);
             last = 0;
-            console.log("ERR:last is zero at line: " + idx);
         }
         else
         {
