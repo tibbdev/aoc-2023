@@ -17,8 +17,14 @@ function isDigit(char)
 function isSymbol(char)
 {
     let len_chk = char.length === 1;
+    let digit_chk = !isDigit(char);
+    let dot_chk = ('.' != char);
+    let nl_chk = ('\n' != char);
+    let cr_chk = ('\r' != char);
 
-    return  len_chk && !isDigit(char) && ('.' != char);
+    let combined = len_chk && digit_chk && dot_chk && nl_chk && cr_chk;
+
+    return  combined;
 }
 
 // Read filename as extra argument
@@ -33,6 +39,7 @@ for (let y = 0; y < file_data.length; y++)
     let out_str = "";
     let val = 0;
     let add_to_sum = false;
+    let discovered_anew = false;
 
     for(let x = 0; x < file_data[y].length; x++)
     {
@@ -40,12 +47,13 @@ for (let y = 0; y < file_data.length; y++)
         if(ch === '.')
         {
             out_str += ' ';
-            if (add_to_sum)
+            if (add_to_sum && (0 != val))
             {
                 part_sum += val;
             }
             val = 0;
             add_to_sum = false;
+            discovered_anew = false;
         }
         else if (isDigit(ch)) // working out part number
         {
@@ -59,25 +67,27 @@ for (let y = 0; y < file_data.length; y++)
         }
 
         // test if a symbol is adjacent to current part
-        for (let j = -1; j <= 1; j++)
+        if(isDigit(ch))
         {
-            for (let i = -1; i <= 1; i++) 
+            for (let j = -1; j <= 1; j++)
             {
-                let yy = y + j;
-                let xx = x + i;
-                if((xx >= 0) && (yy >= 0) && (xx < file_data[y].length) && (yy < file_data.length))
+                for (let i = -1; i <= 1; i++) 
                 {
-                    let test_ch = file_data[yy].charAt(xx);
-                    console.log('testing: (' + xx + ',' + yy + ') :: [' + test_ch + '] symb?' + isSymbol(test_ch));
-                    if(isSymbol(test_ch))
+                    let yy = y + j;
+                    let xx = x + i;
+                    
+                    if((xx >= 0) && (yy >= 0) && (xx < file_data[y].length) && (yy < file_data.length))
                     {
-                        add_to_sum = true;
+                        let test_ch = file_data[yy].charAt(xx);
+                        if(isSymbol(test_ch))
+                        {
+                            add_to_sum = true;
+                        }
                     }
                 }
             }
         }
     }
-    console.log(out_str);
 }
 
 console.log("Part 1 answer : " + part_sum);
