@@ -65,6 +65,11 @@ function is_game_possible(game_info)
     return (game_info[1] <= RED_MAX) && (game_info[2] <= GREEN_MAX) && (game_info[3] <= BLUE_MAX);
 }
 
+function calculate_game_power(game_info)
+{
+    return game_info[1] * game_info[2] * game_info[3];
+}
+
 console.log("Advent of code 2023 - Day 2!");
 
 // Read filename as extra argument
@@ -73,11 +78,12 @@ let filename = process.argv[2];
 
 // Read input file
 let file_data = read_file(filename);
-console.log("File Content :\n");
+let games = [];
 file_data.forEach(element => {
     if(element != "") // skip blank lines
     {
         let game_data = split_game_data(element);
+        games.push(game_data);
         if(is_game_possible(game_data))
         {
             id_acc += game_data[0];
@@ -85,4 +91,12 @@ file_data.forEach(element => {
     }
 });
 
+let total_power = 0;
+games.forEach(game =>
+    {
+        let game_power = calculate_game_power(game);
+        total_power += game_power;
+    })
+
 console.log("Part 1 answer : " + id_acc);
+console.log("Part 2 answer : " + total_power);
