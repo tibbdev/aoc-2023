@@ -1,5 +1,7 @@
 var fs = require('fs');
 
+const GEAR_SYMBOL = "*";
+
 console.log("Advent of code 2023 - Day 3!");
 
 function read_file(path)
@@ -12,6 +14,11 @@ function read_file(path)
 function isDigit(char)
 {
     return  (char.length === 1) && ('0' <= char) && ('9' >= char);
+}
+
+function isPotentiallyAGear(char)
+{
+    return  (char.length === 1) && (GEAR_SYMBOL === char);
 }
 
 function isSymbol(char)
@@ -34,12 +41,12 @@ let filename = process.argv[2];
 let file_data = read_file(filename);
 
 let part_sum = 0;
+let gear_ratio_sum = 0;
 for (let y = 0; y < file_data.length; y++)
 {
     let out_str = "";
     let val = 0;
     let add_to_sum = false;
-    let discovered_anew = false;
 
     for(let x = 0; x < file_data[y].length; x++)
     {
@@ -56,6 +63,10 @@ for (let y = 0; y < file_data.length; y++)
             {
                 out_str += ' ';
             }
+            else if(isPotentiallyAGear(ch))
+            {
+                out_str += 'g';
+            }
             else
             {
                 out_str += ch;
@@ -63,7 +74,6 @@ for (let y = 0; y < file_data.length; y++)
             
             if (add_to_sum && (0 != val))
             {
-                console.log(val);
                 part_sum += val;
             }
             val = 0;
@@ -92,8 +102,46 @@ for (let y = 0; y < file_data.length; y++)
                 }
             }
         }
+
+        // if it's maybe a gear confirm, by identifying the unique numbers adjacent to it.
+        if(isPotentiallyAGear(ch))
+        {
+            let part_count = 0;
+            for (let j = -1; j <= 1; j++)
+            {
+                let digsFoundNearBy = false;
+                for (let i = -1; i <= 1; i++) 
+                {
+                    let yy = y + j;
+                    let xx = x + i;
+                    
+                    if((xx >= 0) && (yy >= 0) && (xx < file_data[y].length) && (yy < file_data.length))
+                    {
+                        let test_ch = file_data[yy].charAt(xx);
+                        if(isDigit(test_ch))
+                        {
+                            if(!digsFoundNearBy)
+                            {
+                                part_count++;
+                            }
+                            digsFoundNearBy = true;
+                        }
+                        else 
+                        {
+                            digsFoundNearBy = false;
+                        }
+                    }
+                }
+            }
+
+            if (part_count === 2)
+            {
+                console.log("!!G!!");
+            }
+        }
     }
+    console.log(out_str);
 }
 
 console.log("Part 1 answer : " + part_sum);
-console.log("Part 2 answer : " + 0);
+console.log("Part 2 answer : " + gear_ratio_sum);
