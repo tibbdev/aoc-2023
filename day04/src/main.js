@@ -36,7 +36,7 @@ function splitScratchCardData(scratchcard_line)
     let winning_numbers = space_split_str_to_int_array(winning_str);
     let my_numbers = space_split_str_to_int_array(numbers_str);;
 
-    return {"id" : card_id, "winning_numbers": winning_numbers, "my_numbers" : my_numbers};
+    return {"id" : card_id, "winning_numbers": winning_numbers, "my_numbers" : my_numbers, "copies" : 1};
 }
 
 function scoreScratchCard(scratchcard)
@@ -65,6 +65,57 @@ function scoreScratchCard(scratchcard)
     return score;
 }
 
+function count_matches(winners, nums)
+{
+    let match_cnt = 0;
+    winners.forEach(value =>
+        {
+            nums.forEach(num =>
+                {
+                    if (value === num)
+                    {
+                        match_cnt++;
+                    }
+                });
+        });
+    return match_cnt;
+}
+
+function part1_impl(scratchcards)
+{
+    let total_score = 0;
+
+    scratchcards.forEach(card => {
+        total_score += scoreScratchCard(card);
+    })
+
+    return total_score;
+}
+
+function part2_impl(scratchcards)
+{
+    let card_count = 0;
+
+    for(let idx = 0; scratchcards.length > idx; idx++)
+    {
+        let copies = scratchcards[idx].copies;
+        let matches = count_matches(scratchcards[idx].winning_numbers, scratchcards[idx].my_numbers);
+        for(;copies > 0; copies--)
+        {
+            for(let idxi = idx; (idx + matches) > idxi; idxi++)
+            {
+                scratchcards[idxi + 1].copies++;
+            }
+        }
+    }
+
+    for(let idx = 0; scratchcards.length > idx; idx++)
+    {
+        card_count += scratchcards[idx].copies;
+    }
+
+    return card_count;
+}
 
 // Read filename as extra argument
 let filename = process.argv[2];
@@ -72,14 +123,11 @@ let filename = process.argv[2];
 // Read input file
 let file_data = read_file(filename);
 
-let total_score = 0;
 let scratchcards = [];
 file_data.forEach(sc =>
     {
         scratchcards.push(splitScratchCardData(sc));
-        total_score +=  scoreScratchCard(scratchcards[scratchcards.length - 1]);
     });
 
-
-console.log("Part 1 answer : " + total_score);
-console.log("Part 2 answer : " + 0);
+console.log("Part 1 answer : " + part1_impl(scratchcards));
+console.log("Part 2 answer : " + part2_impl(scratchcards));
