@@ -17,3 +17,7 @@ Part 1 completed. having issues in part 2 with keeping track of values. Identifi
 ## Day 4 - Scratchcards 
 
 Both parts completed. No issues left.
+
+## Day 5 - If You Give A Seed A Fertilizer
+
+Part 1, answer is too low, second attempt at finding a solution. First attempt was trying to keep track of all the maps and ran out of heap!!!! this time as it finished reading a map, processes it to get the inputs for the next round of mapping.

@@ -33,6 +33,8 @@ function split_input_file(input)
         }
         else if (input[idx] === "")
         {
+            console.log("SEEDS: ", seeds_list);
+            console.log("MAP: ", map_builder);
             outputs = [];
 
             seeds_list.forEach(seed => {
@@ -50,6 +52,9 @@ function split_input_file(input)
                 outputs.push(out);
 
             });
+
+            console.log("OUT: ", outputs);
+            console.log("===---###---===");
 
             seeds_list = outputs;
 
@@ -74,6 +79,8 @@ function split_input_file(input)
 function part1_impl(data)
 {
     organised_data = split_input_file(data);
+
+    // console.log(organised_data)
 
     let min_value = NaN;
     organised_data.forEach(value =>
