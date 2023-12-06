@@ -21,4 +21,4 @@ Both parts completed. No issues left.
 ## Day 5 - If You Give A Seed A Fertilizer
 
 Part 1, answer is too low, second attempt at finding a solution. First attempt was trying to keep track of all the maps and ran out of heap!!!! this time as it finished reading a map, processes it to get the inputs for the next round of mapping. ***RESOLVED*** - This was because the input file did not have an empty row at the end, and the map was only being processed on an empty row. NEED TO FIX THIS BUG, but have the solution to the problem.
-
+Part 2, does not compute an answer, get 'Fatal JavaScript invalid size error 169220804' error message... Also windows is an asshole
