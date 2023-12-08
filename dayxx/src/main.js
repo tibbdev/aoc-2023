@@ -1,6 +1,6 @@
 var fs = require('fs');
 
-console.log("Advent of code 2023 - Day 7!");
+console.log("Advent of code 2023 - Day xx!");
 
 // Read filename as extra argument
 let filename = process.argv[2];
