@@ -26,6 +26,17 @@ function strip_double_spaces(str)
     return old_str;
 }
 
+function strip_single_spaces(str)
+{
+    let old_str = str;
+
+    while (old_str != old_str.replace(" ", "")) {
+        old_str = old_str.replace(" ", "")
+    }
+
+    return old_str;
+}
+
 let data = [];
 
 file_data.forEach(line =>
@@ -74,3 +85,35 @@ record_beaters.forEach(winners =>
     })
 
 console.log("Part 1: ", error_margin);
+
+// Part 2 Implementation
+data = [];
+
+file_data.forEach(line =>
+    {
+        let stripped_line = strip_double_spaces(line);
+        let line_split = stripped_line.split(": ");
+        stripped_line = strip_single_spaces(line_split[1]);
+
+        let d = parseInt(stripped_line);
+
+        data.push(d);
+    });
+
+let beat_count = 0;
+for (let speed = 0; speed < data[0]; speed++)
+{
+    let move_time = data[0] - speed;
+
+    if(0 < move_time)
+    {
+        let distance = speed * move_time;
+
+        if(data[1] < distance)
+        {
+            beat_count++;
+        }
+    }
+}
+
+console.log("Part 2: ", beat_count);
